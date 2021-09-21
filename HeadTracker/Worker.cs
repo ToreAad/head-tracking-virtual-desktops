@@ -13,8 +13,6 @@ namespace HeadTracker
         private readonly ILogger<Worker> _logger;
 
         private Thread _listenerThread;
-        private UdpListener _listener;
-        private DesktopChanger _changer;
 
         public Worker(ILogger<Worker> logger)
         {
@@ -23,9 +21,7 @@ namespace HeadTracker
 
         public override Task StartAsync(CancellationToken cancellationToken)
         {
-            _listener = new UdpListener();
-            _changer = new DesktopChanger(_listener);
-            _listenerThread = new Thread(async () => await _listener.Run(cancellationToken));
+            _listenerThread = new Thread(() => DesktopChanger.Run(cancellationToken));
             _listenerThread.SetApartmentState(ApartmentState.STA);
             _listenerThread.Start();
             return base.StartAsync(cancellationToken);
