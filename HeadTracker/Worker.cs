@@ -5,6 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using DesktopChanger;
 
 namespace HeadTracker
 {
@@ -21,7 +22,10 @@ namespace HeadTracker
 
         public override Task StartAsync(CancellationToken cancellationToken)
         {
-            _listenerThread = new Thread(() => DesktopChanger.Run(cancellationToken));
+            _listenerThread = new Thread(() => {
+                var dc = new DesktopChanger.DesktopChanger();
+                dc.Run(cancellationToken);
+            });
             _listenerThread.SetApartmentState(ApartmentState.STA);
             _listenerThread.Start();
             return base.StartAsync(cancellationToken);
