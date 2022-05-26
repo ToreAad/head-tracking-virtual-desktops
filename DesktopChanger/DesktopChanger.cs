@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Media;
 using System.Net;
 using System.Net.Sockets;
 using System.Runtime.InteropServices;
 using System.Threading;
+using GlobalHotKeys;
+using GlobalHotKeys.Native.Types;
 
 namespace DesktopChanger
 {
@@ -33,13 +36,31 @@ namespace DesktopChanger
                 System.Console.WriteLine("VirtualDesktop.Desktop.Create()");
             }
 
-            var state = Front(DesktopState.Left);
+            var oldState = Front(DesktopState.Left);
+            var active = true;
+            void HotKeyPressed(HotKey hotKey) {
+                active = !active;
+                Console.WriteLine(active);
+            };
 
+            using var hotKeyManager = new HotKeyManager();
+            using var subscription = hotKeyManager.HotKeyPressed.Subscribe(HotKeyPressed);
+            using var ctrl1 = hotKeyManager.Register(VirtualKeyCode.KEY_A, Modifiers.Alt);
 
+            SoundPlayer player = new SoundPlayer(Resources.click);
+
+            var debounce = 0;
             while (!stoppingToken.IsCancellationRequested)
             {
                 var sender = new IPEndPoint(IPAddress.Any, 0);
                 var data = sock.Receive(ref sender);
+
+                if (!active) continue;
+                if (debounce > 0)
+                {
+                    debounce--;
+                    continue;
+                }
 
                 var pos = new HeadPosition
                 {
@@ -51,9 +72,15 @@ namespace DesktopChanger
                     Roll = BitConverter.ToDouble(data, 40),
                 };
 
-                //Console.WriteLine(pos.Yaw);
+                var newState = UpdateState(oldState, pos);
+                if (newState != oldState)
+                {
+                    player.Play();
+                    oldState = newState;
+                    debounce = 5;
+                }
+                
 
-                state = UpdateState(state, pos);
             }
         }
 
@@ -88,13 +115,13 @@ namespace DesktopChanger
 
         internal DesktopState UpdateState(DesktopState state, HeadPosition pos)
         {
-            var leftLimit = -25;
-            var rightLimit = 25.0;
 
-            if (pos.Pitch > 0)
+            var (leftLimit, rightLimit) = (state) switch
             {
-                return state;
-            }
+                (DesktopState.Left) => (-30.0, 35.0),
+                (DesktopState.Front) => (-35.0, 35.0),
+                (DesktopState.Right) => (-35.0, 30.0),
+            };
 
             if (pos.Yaw < leftLimit)
             {
@@ -108,6 +135,7 @@ namespace DesktopChanger
             {
                 return Front(state);
             }
+            return state;
         }
     }
 }
