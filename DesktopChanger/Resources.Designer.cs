@@ -68,5 +68,14 @@ namespace DesktopChanger {
                 return ResourceManager.GetStream("click", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
+        /// </summary>
+        internal static System.IO.UnmanagedMemoryStream synth {
+            get {
+                return ResourceManager.GetStream("synth", resourceCulture);
+            }
+        }
     }
 }

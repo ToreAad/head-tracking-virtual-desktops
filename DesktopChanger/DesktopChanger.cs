@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Media;
 using System.Net;
 using System.Net.Sockets;
@@ -38,29 +38,35 @@ namespace DesktopChanger
 
             var oldState = Front(DesktopState.Left);
             var active = true;
+            var responsive = false;
             void HotKeyPressed(HotKey hotKey) {
-                active = !active;
-                Console.WriteLine(active);
+                switch (hotKey.Key)
+                {
+                    case VirtualKeyCode.KEY_A:
+                        active = !active;
+                        break;
+                    case VirtualKeyCode.KEY_R:
+                        responsive = !responsive;
+                        break;
+                }
             };
+
+            var pitchLimit = -15.0;
+
+            SoundPlayer changeDesktopSound = new SoundPlayer(Resources.click);
+            bool activeSoundIsPlaying = false;
+            SoundPlayer activeSound = new SoundPlayer(Resources.synth);
 
             using var hotKeyManager = new HotKeyManager();
             using var subscription = hotKeyManager.HotKeyPressed.Subscribe(HotKeyPressed);
             using var ctrl1 = hotKeyManager.Register(VirtualKeyCode.KEY_A, Modifiers.Alt);
-
-            SoundPlayer player = new SoundPlayer(Resources.click);
-
-            var debounce = 0;
+            using var ctrl2 = hotKeyManager.Register(VirtualKeyCode.KEY_R, Modifiers.Alt);
             while (!stoppingToken.IsCancellationRequested)
             {
                 var sender = new IPEndPoint(IPAddress.Any, 0);
                 var data = sock.Receive(ref sender);
 
                 if (!active) continue;
-                if (debounce > 0)
-                {
-                    debounce--;
-                    continue;
-                }
 
                 var pos = new HeadPosition
                 {
@@ -72,15 +78,32 @@ namespace DesktopChanger
                     Roll = BitConverter.ToDouble(data, 40),
                 };
 
+                if (!responsive && pos.Pitch > pitchLimit)
+                {
+                    if (activeSoundIsPlaying)
+                    {
+                        activeSound.Stop();
+                        activeSoundIsPlaying = false;
+                    }
+                    continue;
+                }
+                if (!responsive && pos.Pitch <= pitchLimit)
+                {
+                    if (!activeSoundIsPlaying)
+                    {
+                        activeSound.PlayLooping();
+                        activeSoundIsPlaying = true;
+                    }
+                }
+
                 var newState = UpdateState(oldState, pos);
+
                 if (newState != oldState)
                 {
-                    player.Play();
+                    changeDesktopSound.Play();
                     oldState = newState;
-                    debounce = 5;
+                    activeSoundIsPlaying = false;
                 }
-                
-
             }
         }
 
@@ -118,9 +141,9 @@ namespace DesktopChanger
 
             var (leftLimit, rightLimit) = (state) switch
             {
-                (DesktopState.Left) => (-30.0, 35.0),
+                (DesktopState.Left) => (-35, 35.0),
                 (DesktopState.Front) => (-35.0, 35.0),
-                (DesktopState.Right) => (-35.0, 30.0),
+                (DesktopState.Right) => (-35.0, 35),
             };
 
             if (pos.Yaw < leftLimit)
@@ -131,11 +154,7 @@ namespace DesktopChanger
             {
                 return Right(state);
             }
-            else
-            {
-                return Front(state);
-            }
-            return state;
+            return Front(state);
         }
     }
 }
