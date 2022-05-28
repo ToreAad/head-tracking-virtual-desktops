@@ -3,31 +3,18 @@
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
+    <Configurations>Debug;Release;Win10;Win11</Configurations>
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="./../VirtualDesktop\VirtualDesktop.cs" />
-    <Compile Remove="./../VirtualDesktop\VirtualDesktop11Insider.cs" />
-    <Compile Remove="./../VirtualDesktop\VirtualDesktop1607.cs" />
-    <Compile Remove="./../VirtualDesktop\VirtualDesktop1803.cs" />
-    <Compile Remove="./../VirtualDesktop\VirtualDesktopServer2022.cs" />
     <Compile Remove="VirtualDesktop\VDeskTool.cs" />
     <Compile Remove="VirtualDesktop\VDeskTool_1607_1803.cs" />
-    <Compile Remove="VirtualDesktop\VirtualDesktop.cs" />
+    <Compile Condition="$(Configuration.Contains('Win11'))" Remove="VirtualDesktop\VirtualDesktop.cs" />
+	<Compile Condition="$(Configuration.Contains('Win10'))" Remove="VirtualDesktop\VirtualDesktop11.cs" />
     <Compile Remove="VirtualDesktop\VirtualDesktop11Insider.cs" />
     <Compile Remove="VirtualDesktop\VirtualDesktop1607.cs" />
     <Compile Remove="VirtualDesktop\VirtualDesktop1803.cs" />
     <Compile Remove="VirtualDesktop\VirtualDesktopServer2022.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="VirtualDesktop\VDeskTool.cs" />
-    <None Include="VirtualDesktop\VDeskTool_1607_1803.cs" />
-    <None Include="VirtualDesktop\VirtualDesktop.cs" />
-    <None Include="VirtualDesktop\VirtualDesktop11Insider.cs" />
-    <None Include="VirtualDesktop\VirtualDesktop1607.cs" />
-    <None Include="VirtualDesktop\VirtualDesktop1803.cs" />
-    <None Include="VirtualDesktop\VirtualDesktopServer2022.cs" />
   </ItemGroup>
 
   <ItemGroup>

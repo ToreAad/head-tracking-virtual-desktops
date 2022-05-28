@@ -4,6 +4,7 @@
     <OutputType>Exe</OutputType>
     <TargetFramework>net6.0</TargetFramework>
 	  <ImplicitUsings>true</ImplicitUsings>
+	  <Configurations>Debug;Release;Win10;Win11</Configurations>
   </PropertyGroup>
 
   <ItemGroup>

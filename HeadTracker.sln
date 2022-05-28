@@ -5,28 +5,42 @@ VisualStudioVersion = 17.1.32421.90
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HeadTrackerService", "HeadTracker\HeadTrackerService.csproj", "{9AD5E411-32C2-4F7A-B7D4-FF37E6CDDC75}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DesktopChanger", "DesktopChanger\DesktopChanger.csproj", "{112D0732-B282-43F0-A036-19E5D6808BFF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DesktopChanger", "DesktopChanger\DesktopChanger.csproj", "{112D0732-B282-43F0-A036-19E5D6808BFF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DesktopChangerApp", "DesktopChangerApp\DesktopChangerApp.csproj", "{EF32801E-2F2A-48C3-A1A3-447B7C364384}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DesktopChangerApp", "DesktopChangerApp\DesktopChangerApp.csproj", "{EF32801E-2F2A-48C3-A1A3-447B7C364384}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
+		Win10 Debug|Any CPU = Win10 Debug|Any CPU
+		Win11 Debug|Any CPU = Win11 Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{9AD5E411-32C2-4F7A-B7D4-FF37E6CDDC75}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{9AD5E411-32C2-4F7A-B7D4-FF37E6CDDC75}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9AD5E411-32C2-4F7A-B7D4-FF37E6CDDC75}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9AD5E411-32C2-4F7A-B7D4-FF37E6CDDC75}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9AD5E411-32C2-4F7A-B7D4-FF37E6CDDC75}.Win10 Debug|Any CPU.ActiveCfg = Win10|Any CPU
+		{9AD5E411-32C2-4F7A-B7D4-FF37E6CDDC75}.Win10 Debug|Any CPU.Build.0 = Win10|Any CPU
+		{9AD5E411-32C2-4F7A-B7D4-FF37E6CDDC75}.Win11 Debug|Any CPU.ActiveCfg = Win11|Any CPU
+		{9AD5E411-32C2-4F7A-B7D4-FF37E6CDDC75}.Win11 Debug|Any CPU.Build.0 = Win11|Any CPU
 		{112D0732-B282-43F0-A036-19E5D6808BFF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{112D0732-B282-43F0-A036-19E5D6808BFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{112D0732-B282-43F0-A036-19E5D6808BFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{112D0732-B282-43F0-A036-19E5D6808BFF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{112D0732-B282-43F0-A036-19E5D6808BFF}.Win10 Debug|Any CPU.ActiveCfg = Win10|Any CPU
+		{112D0732-B282-43F0-A036-19E5D6808BFF}.Win10 Debug|Any CPU.Build.0 = Win10|Any CPU
+		{112D0732-B282-43F0-A036-19E5D6808BFF}.Win11 Debug|Any CPU.ActiveCfg = Win11|Any CPU
+		{112D0732-B282-43F0-A036-19E5D6808BFF}.Win11 Debug|Any CPU.Build.0 = Win11|Any CPU
 		{EF32801E-2F2A-48C3-A1A3-447B7C364384}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{EF32801E-2F2A-48C3-A1A3-447B7C364384}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EF32801E-2F2A-48C3-A1A3-447B7C364384}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EF32801E-2F2A-48C3-A1A3-447B7C364384}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EF32801E-2F2A-48C3-A1A3-447B7C364384}.Win10 Debug|Any CPU.ActiveCfg = Win10|Any CPU
+		{EF32801E-2F2A-48C3-A1A3-447B7C364384}.Win10 Debug|Any CPU.Build.0 = Win10|Any CPU
+		{EF32801E-2F2A-48C3-A1A3-447B7C364384}.Win11 Debug|Any CPU.ActiveCfg = Win10|Any CPU
+		{EF32801E-2F2A-48C3-A1A3-447B7C364384}.Win11 Debug|Any CPU.Build.0 = Win10|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

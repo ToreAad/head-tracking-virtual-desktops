@@ -30,7 +30,7 @@ namespace DesktopChanger
             var endpoint = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 4242);
             var sock = new UdpClient(endpoint);
             
-            for(int i = VirtualDesktop.Desktop.Count; i - 3 > 0; i--)
+            for(int i = VirtualDesktop.Desktop.Count; 3-i > 0; i++)
             {
                 VirtualDesktop.Desktop.Create();
                 System.Console.WriteLine("VirtualDesktop.Desktop.Create()");
@@ -38,7 +38,7 @@ namespace DesktopChanger
 
             var oldState = Front(DesktopState.Left);
             var active = true;
-            var responsive = false;
+            var responsive = true;
             void HotKeyPressed(HotKey hotKey) {
                 switch (hotKey.Key)
                 {
@@ -51,7 +51,7 @@ namespace DesktopChanger
                 }
             };
 
-            var pitchLimit = -15.0;
+            var pitchLimit = -10.0;
 
             SoundPlayer changeDesktopSound = new SoundPlayer(Resources.click);
             bool activeSoundIsPlaying = false;
@@ -141,18 +141,19 @@ namespace DesktopChanger
 
             var (leftLimit, rightLimit) = (state) switch
             {
-                (DesktopState.Left) => (-35, 35.0),
-                (DesktopState.Front) => (-35.0, 35.0),
-                (DesktopState.Right) => (-35.0, 35),
+                (DesktopState.Left) => (-15.0, 15.0),
+                (DesktopState.Front) => (-15.0, 15.0),
+                (DesktopState.Right) => (-15.0, 15.0),
             };
 
-            if (pos.Yaw < leftLimit)
-            {
-                return Left(state);
-            }
-            else if (pos.Yaw > rightLimit)
+            if (pos.X < leftLimit)
             {
                 return Right(state);
+            }
+            else if (pos.X > rightLimit)
+            {
+                return Left(state);
+                
             }
             return Front(state);
         }

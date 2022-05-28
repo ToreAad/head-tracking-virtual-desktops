@@ -5,6 +5,7 @@
     <UserSecretsId>dotnet-HeadTracker-D45EA5F7-CC49-41BC-904A-5BB541B59BC1</UserSecretsId>
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <StartupObject>HeadTracker.Program</StartupObject>
+    <Configurations>Debug;Release;Win10;Win11</Configurations>
   </PropertyGroup>
 
   <ItemGroup>
